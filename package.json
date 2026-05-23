@@ -1,0 +1,23 @@
+{
+  "name": "la28-lens",
+  "version": "1.0.0",
+  "description": "DISCOVER LA & ACCESSFriendly - LA28 Global Portal and AR HUD Telemetry Emulator",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "keywords": [
+    "la28",
+    "accessibility",
+    "paratransit",
+    "ar-hud",
+    "google-cloud",
+    "sovereign"
+  ],
+  "author": "Keith McPherson",
+  "license": "ISC"
+}

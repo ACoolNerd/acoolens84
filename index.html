@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DISCOVER LA & ACCESSFriendly - LA28 Global Portal</title>
+    <meta name="description" content="ACCESSFriendly LA28 - Sovereign Accessible transit, global scheduling menu, AR HUD emulation, and startup pitch portal for the 2028 Olympic & Paralympic Games.">
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="brand-section">
+                <div class="brand-logo" id="appLogo">
+                    <span>LA28</span> LENS
+                </div>
+                <span class="brand-badge" id="appModeBadge">ACCESSFriendly</span>
+            </div>
+
+            <nav class="nav-links">
+                <li class="nav-item active" id="navHome">
+                    <button onclick="switchTab('home')" id="btnNavHome">
+                        <span class="icon">🏠</span> <span data-i18n="nav_home">Dashboard Home</span>
+                    </button>
+                </li>
+                <li class="nav-item" id="navEvents">
+                    <button onclick="switchTab('events')" id="btnNavEvents">
+                        <span class="icon">📅</span> <span data-i18n="nav_events">Master Schedule</span>
+                    </button>
+                </li>
+                <li class="nav-item" id="navTransit">
+                    <button onclick="switchTab('transit')" id="btnNavTransit">
+                        <span class="icon">🚇</span> <span data-i18n="nav_transit">Transit Router</span>
+                    </button>
+                </li>
+                <li class="nav-item" id="navHUD">
+                    <button onclick="switchTab('hud')" id="btnNavHUD">
+                        <span class="icon">🕶️</span> <span data-i18n="nav_hud">LA84 AR HUD</span>
+                    </button>
+                </li>
+                <li class="nav-item" id="navPitch">
+                    <button onclick="switchTab('pitch')" id="btnNavPitch">
+                        <span class="icon">📊</span> <span data-i18n="nav_pitch">Startup Deck</span>
+                    </button>
+                </li>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="language-selector">
+                    <label for="languageSelect" data-i18n="select_language">Language</label>
+                    <select id="languageSelect" class="language-select" onchange="changeLanguage(this.value)">
+                        <option value="en">English (US)</option>
+                        <option value="es">Español (ES)</option>
+                        <option value="hy">Հայերեն (AM)</option>
+                        <option value="ja">日本語 (JP)</option>
+                        <option value="fr">Français (FR)</option>
+                        <option value="tl">Tagalog (PH)</option>
+                        <option value="ko">한국어 (KR)</option>
+                        <option value="de">Deutsch (DE)</option>
+                    </select>
+                </div>
+
+                <div class="user-card" id="userProfileCard">
+                    <div class="user-avatar">KM</div>
+                    <div class="user-info">
+                        <span class="user-name">Keith McPherson</span>
+                        <span class="user-role" data-i18n="user_role">Sovereign Founder</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Workspace -->
+        <main class="main-content">
+
+            <!-- TAB 1: DASHBOARD HOME -->
+            <section id="tab-home" class="content-section active">
+                <div class="section-header">
+                    <div class="header-title-area">
+                        <h1 data-i18n="home_title">Ecosystem Command</h1>
+                        <p data-i18n="home_subtitle">Elevating the San Fernando Valley and greater Los Angeles to the world.</p>
+                    </div>
+                    <div class="badge badge-orange" id="statusPill">System Online</div>
+                </div>
+
+                <!-- Global Stats Row -->
+                <div class="dashboard-grid">
+                    <div class="glass-card">
+                        <div class="card-title">🚀 <span data-i18n="stat_events">Total Events</span></div>
+                        <div style="font-size: 2.2rem; font-weight: 800; color: var(--accent-orange); font-family: var(--font-mono);" id="statTotalEvents">845</div>
+                        <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 5px;" data-i18n="stat_events_sub">Synchronized from Alain Rosas' Master Registry</p>
+                    </div>
+                    <div class="glass-card">
+                        <div class="card-title">♿ <span data-i18n="stat_accessibility">ACCESSFriendly</span></div>
+                        <div style="font-size: 2.2rem; font-weight: 800; color: var(--accent-teal); font-family: var(--font-mono);" id="statAccessibleVenues">100%</div>
+                        <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 5px;" data-i18n="stat_accessibility_sub">Step-Free, Elevator-Audited & Level-Boarding</p>
+                    </div>
+                    <div class="glass-card">
+                        <div class="card-title">💵 <span data-i18n="stat_budget">Budget Games</span></div>
+                        <div style="font-size: 2.2rem; font-weight: 800; color: var(--accent-purple); font-family: var(--font-mono);" id="statBudgetSessions">147</div>
+                        <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 5px;" data-i18n="stat_budget_sub">Sessions with under $28 tickets available</p>
+                    </div>
+                </div>
+
+                <!-- Logistics Companions Selector -->
+                <div class="glass-card">
+                    <div class="card-title">🗣️ <span data-i18n="companion_title">Interactive Logistics Companions</span></div>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 15px;" data-i18n="companion_desc">Select a local guide or global sporting star to provide real-time paratransit directions and Olympic commentary.</p>
+                    
+                    <div class="companion-selector">
+                        <div class="companion-avatar active" id="compNoah" onclick="selectCompanion('noah')" title="Noah Lyles (USA)">🏃🏾‍♂️</div>
+                        <div class="companion-avatar" id="compShaCarri" onclick="selectCompanion('shacarri')" title="Sha'Carri Richardson (USA)">🏃🏾‍♀️</div>
+                        <div class="companion-avatar" id="compKeith" onclick="selectCompanion('keith')" title="Keith McPherson (Sovereign Founder)">🧑‍🦽</div>
+                        <div class="companion-avatar" id="compAlain" onclick="selectCompanion('alain')" title="Alain Rosas (Master Planner)">📊</div>
+                    </div>
+
+                    <div class="companion-dialog">
+                        <div class="companion-bubble-header" id="companionName">Noah Lyles (USA)</div>
+                        <p style="font-size: 0.95rem; line-height: 1.5; font-style: italic;" id="companionQuote">"We are running down world records on the track, but the real victory is ensuring the entire city of LA is 100% accessible to every sports fan on earth. Let's map your transit!"</p>
+                    </div>
+                </div>
+
+                <!-- System Diagnostic Feeds -->
+                <div class="glass-card">
+                    <div class="card-title">🛡️ <span data-i18n="diagnostics_title">Sovereign Layer Diagnostics</span></div>
+                    <pre style="background: rgba(0,0,0,0.5); padding: 15px; border-radius: 8px; font-family: var(--font-mono); font-size: 0.75rem; color: var(--color-success); overflow-x: auto; line-height: 1.4;" id="diagnosticLogs">
+[RUTH-GATEWAY] Verification: RUTHApproval GRANTED ✓
+[SYSTEM] MallocStackLogging: ENABLED on child instances (Lite Mode active).
+[DAT-SDK] Connected to LA84 Sunglasses HUD telemetry stream.
+[MTA-GTFS] Live elevator service statuses: 52/52 ACTIVE.
+[EQUAL-AI] Sovereign intelligence vault successfully encrypted and isolated.
+                    </pre>
+                </div>
+            </section>
+
+
+            <!-- TAB 2: MASTER SCHEDULE & EVENT FINDER -->
+            <section id="tab-events" class="content-section">
+                <div class="section-header">
+                    <div class="header-title-area">
+                        <h1 data-i18n="events_title">LA28 Master Scheduler</h1>
+                        <p data-i18n="events_subtitle">Search, filter, and plan matches across 845 events and 52 venues.</p>
+                    </div>
+                    <div class="badge badge-teal" id="eventsCountBadge">845 Sessions</div>
+                </div>
+
+                <!-- Filter Controls -->
+                <div class="glass-card">
+                    <div class="filter-bar">
+                        <input type="text" id="eventSearch" class="search-input" placeholder="Search sports, venues, or descriptions..." oninput="filterEvents()">
+                        
+                        <select id="sportFilter" class="filter-select" onchange="filterEvents()">
+                            <option value="">All Sports</option>
+                        </select>
+
+                        <select id="zoneFilter" class="filter-select" onchange="filterEvents()">
+                            <option value="">All Zones</option>
+                        </select>
+
+                        <label class="checkbox-label" for="budgetFilter">
+                            <input type="checkbox" id="budgetFilter" onchange="filterEvents()">
+                            <span data-i18n="filter_under_28">Under $28 Tickets</span>
+                        </label>
+                    </div>
+
+                    <!-- List Container -->
+                    <div class="events-list-container" id="eventsList">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- TAB 3: ACCESSFriendly TRANSIT ROUTER -->
+            <section id="tab-transit" class="content-section">
+                <div class="section-header">
+                    <div class="header-title-area">
+                        <h1 data-i18n="transit_title">ACCESSFriendly Transit Router</h1>
+                        <p data-i18n="transit_subtitle">MTA Subway, Light Rail, and G/J Busway scheduling simulator for wheelchair boarding.</p>
+                    </div>
+                    <div class="badge badge-purple" id="routerStatusBadge">Adaptive Routing</div>
+                </div>
+
+                <div class="transit-grid">
+                    <!-- Controls Side -->
+                    <div class="transit-controls">
+                        <div class="glass-card" style="padding: 18px; display: flex; flex-direction: column; gap: 12px;">
+                            <label style="font-weight:700; font-size:0.85rem;" data-i18n="router_origin">Starting Hub</label>
+                            <select id="originSelect" class="filter-select" style="width:100%;" onchange="plotRoute()">
+                                <option value="lax">LAX Airport (Transit Hub)</option>
+                                <option value="union">Union Station (DTLA)</option>
+                                <option value="noho">NoHo Metro G-Line Station (Valley)</option>
+                            </select>
+
+                            <label style="font-weight:700; font-size:0.85rem;" data-i18n="router_destination">Olympic Destination Venue</label>
+                            <select id="destSelect" class="filter-select" style="width:100%;" onchange="plotRoute()">
+                                <option value="sofi">2028 Stadium (SoFi Stadium - Inglewood)</option>
+                                <option value="coliseum">LA Memorial Coliseum (Exposition Park)</option>
+                                <option value="valley">Valley Complex 3 (Sepulveda Basin - Skate/Skateboarding)</option>
+                                <option value="rosebowl">Rose Bowl Stadium (Pasadena)</option>
+                                <option value="longbeach">Long Beach Arena (Long Beach)</option>
+                                <option value="carson">Carson Stadium (Dignity Health Sports Park)</option>
+                            </select>
+
+                            <button class="route-btn" id="btnRouteCalc" onclick="plotRoute()">
+                                <span>🗺️</span> <span data-i18n="calculate_route">Calculate Step-Free Route</span>
+                            </button>
+                        </div>
+
+                        <!-- Outage Simulator Toggle -->
+                        <div class="outage-simulator">
+                            <div class="outage-title">
+                                <span>⚠️</span> <span data-i18n="outage_simulator_title">Elevator Outage Simulation</span>
+                            </div>
+                            <p style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 5px;" data-i18n="outage_simulator_desc">Simulate a local elevator breakdown at a crucial MTA transfer station to verify paratransit auto-rerouting.</p>
+                            <button id="btnOutageToggle" class="outage-toggle" onclick="toggleOutage()">
+                                <span data-i18n="simulate_outage">Simulate Station Outage</span>
+                            </button>
+                        </div>
+
+                        <!-- Route Step Instructions -->
+                        <div class="glass-card" style="padding: 18px;">
+                            <h3 style="font-size:1rem; margin-bottom:12px;" data-i18n="route_directions">Step-by-Step Directions</h3>
+                            <div class="route-instructions" id="routeSteps">
+                                <!-- Steps populated by JS -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Visual SVG Map Side -->
+                    <div class="transit-map-visual">
+                        <!-- High Fidelity Metro Grid SVG -->
+                        <svg width="100%" height="100%" viewBox="0 0 600 500" style="background:#08090C;">
+                            <!-- Grid Backlines -->
+                            <defs>
+                                <pattern id="mapGrid" width="40" height="40" patternUnits="userSpaceOnUse">
+                                    <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+                                </pattern>
+                            </defs>
+                            <rect width="100%" height="100%" fill="url(#mapGrid)" />
+                            
+                            <!-- Transit Lines -->
+                            <!-- Orange Line (G-Line Busway) -->
+                            <path id="lineOrange" d="M 80 100 L 250 100" fill="none" stroke="#FF7A00" stroke-width="5" stroke-linecap="round" opacity="0.6"/>
+                            <!-- Red/Purple subway lines (B/D) -->
+                            <path id="lineRed" d="M 250 100 L 320 200 L 350 200" fill="none" stroke="#FF1744" stroke-width="5" stroke-linecap="round" opacity="0.6"/>
+                            <path id="linePurple" d="M 270 200 L 320 200" fill="none" stroke="#BD00FF" stroke-width="5" stroke-linecap="round" opacity="0.6"/>
+                            <!-- Expo Line (E Line) -->
+                            <path id="lineExpo" d="M 180 280 L 320 200 L 450 120" fill="none" stroke="#E040FB" stroke-width="5" stroke-linecap="round" opacity="0.6"/>
+                            <!-- Gold Line (A Line) -->
+                            <path id="lineGold" d="M 320 200 L 320 380 L 320 450" fill="none" stroke="#FFD700" stroke-width="5" stroke-linecap="round" opacity="0.6"/>
+                            <!-- Blue Line (A Line South) -->
+                            <path id="lineBlue" d="M 320 200 L 380 320 L 380 430" fill="none" stroke="#00B0FF" stroke-width="5" stroke-linecap="round" opacity="0.6"/>
+                            <!-- Green Line (C Line East/West) -->
+                            <path id="lineGreen" d="M 120 380 L 320 380 L 450 380" fill="none" stroke="#00E676" stroke-width="5" stroke-linecap="round" opacity="0.6"/>
+                            <!-- Crenshaw/LAX (K Line) -->
+                            <path id="lineK" d="M 250 280 L 250 380" fill="none" stroke="#FF5252" stroke-width="5" stroke-linecap="round" opacity="0.6"/>
+
+                            <!-- Dynamic Active Route Highlight -->
+                            <path id="activeRoutePath" d="" fill="none" stroke="#00F0FF" stroke-width="7" stroke-linecap="round" stroke-dasharray="10, 5" style="display:none; filter: drop-shadow(0 0 8px #00F0FF);"/>
+
+                            <!-- Map Station Nodes -->
+                            <!-- Valley (Sepulveda Basin) -->
+                            <circle cx="80" cy="100" r="8" fill="#FF7A00" stroke="#FFF" stroke-width="2" class="metro-node" onclick="mapNodeClick('Valley')" id="nodeValley"/>
+                            <text x="80" y="85" fill="#FFF" font-size="10" font-family="Space Grotesk" text-anchor="middle">Valley Complex</text>
+
+                            <!-- NoHo Station -->
+                            <circle cx="250" cy="100" r="8" fill="#FF1744" stroke="#FFF" stroke-width="2" class="metro-node" onclick="mapNodeClick('NoHo')" id="nodeNoHo"/>
+                            <text x="260" y="95" fill="#FFF" font-size="10" font-family="Space Grotesk">NoHo Station</text>
+
+                            <!-- Union Station -->
+                            <circle cx="320" cy="200" r="10" fill="#FFF" stroke="#FF7A00" stroke-width="3" class="metro-node" onclick="mapNodeClick('Union Station')" id="nodeUnion"/>
+                            <text x="335" y="205" fill="#FFF" font-weight="bold" font-size="11" font-family="Space Grotesk">Union Station</text>
+
+                            <!-- Exposition Park -->
+                            <circle cx="320" cy="280" r="8" fill="#E040FB" stroke="#FFF" stroke-width="2" class="metro-node" onclick="mapNodeClick('Exposition Park')" id="nodeExpoPark"/>
+                            <text x="332" y="284" fill="#FFF" font-size="10" font-family="Space Grotesk">Exposition Park</text>
+
+                            <!-- Inglewood (SoFi) -->
+                            <circle cx="250" cy="340" r="8" fill="#FF5252" stroke="#FFF" stroke-width="2" class="metro-node" onclick="mapNodeClick('SoFi')" id="nodeSoFi"/>
+                            <text x="238" y="335" fill="#FFF" font-size="10" font-family="Space Grotesk" text-anchor="end">Inglewood (SoFi)</text>
+
+                            <!-- LAX Airport -->
+                            <circle cx="120" cy="380" r="9" fill="#00E676" stroke="#FFF" stroke-width="2" class="metro-node" onclick="mapNodeClick('LAX')" id="nodeLAX"/>
+                            <text x="120" y="400" fill="#FFF" font-size="10" font-family="Space Grotesk" text-anchor="middle">LAX Airport</text>
+
+                            <!-- Carson -->
+                            <circle cx="320" cy="380" r="8" fill="#00B0FF" stroke="#FFF" stroke-width="2" class="metro-node" onclick="mapNodeClick('Carson')" id="nodeCarson"/>
+                            <text x="332" y="384" fill="#FFF" font-size="10" font-family="Space Grotesk">Carson Hub</text>
+
+                            <!-- Long Beach -->
+                            <circle cx="380" cy="430" r="8" fill="#FFD700" stroke="#FFF" stroke-width="2" class="metro-node" onclick="mapNodeClick('Long Beach')" id="nodeLongBeach"/>
+                            <text x="392" y="434" fill="#FFF" font-size="10" font-family="Space Grotesk">Long Beach</text>
+
+                            <!-- Rose Bowl -->
+                            <circle cx="450" cy="120" r="8" fill="#FFD700" stroke="#FFF" stroke-width="2" class="metro-node" onclick="mapNodeClick('Rose Bowl')" id="nodeRoseBowl"/>
+                            <text x="450" y="105" fill="#FFF" font-size="10" font-family="Space Grotesk" text-anchor="middle">Rose Bowl</text>
+
+                            <!-- Live Active Elevator status indicators -->
+                            <g id="elevatorStatusGroup">
+                                <circle cx="320" cy="200" r="16" fill="none" stroke="#00E676" stroke-width="2" stroke-dasharray="3,3" id="elevUnionStatus"/>
+                                <circle cx="320" cy="380" r="16" fill="none" stroke="#00E676" stroke-width="2" stroke-dasharray="3,3" id="elevCarsonStatus"/>
+                            </g>
+                        </svg>
+
+                        <!-- Float legend overlays -->
+                        <div style="position: absolute; bottom: 15px; left: 15px; background: rgba(0,0,0,0.8); padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); font-size: 0.75rem; display: flex; flex-direction: column; gap: 6px;">
+                            <div style="display:flex; align-items:center; gap:8px;"><span class="transit-line-pill line-orange">G</span> <span data-i18n="line_orange_lbl">Orange Line (Valley Busway)</span></div>
+                            <div style="display:flex; align-items:center; gap:8px;"><span class="transit-line-pill line-red">B</span> <span data-i18n="line_red_lbl">Red Line (Subway)</span></div>
+                            <div style="display:flex; align-items:center; gap:8px;"><span class="transit-line-pill line-purple">D</span> <span data-i18n="line_purple_lbl">Purple Line (Subway)</span></div>
+                            <div style="display:flex; align-items:center; gap:8px;"><span class="transit-line-pill line-gold">A</span> <span data-i18n="line_gold_lbl">Gold/Blue Line (Light Rail)</span></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- TAB 4: LA84 AR HUD TELEMETRY SIMULATOR -->
+            <section id="tab-hud" class="content-section">
+                <div class="section-header">
+                    <div class="header-title-area">
+                        <h1 data-i18n="hud_title">LA84 Lens AR Telemetry</h1>
+                        <p data-i18n="hud_subtitle">Virtual heads-up display showcasing real-time coordinates, grade slopes, and seat price charts.</p>
+                    </div>
+                    <div class="badge badge-teal" id="hudStatusBadge">DAT SDK CONNECTED</div>
+                </div>
+
+                <div class="hud-simulation-container">
+                    <!-- Virtual Viewport -->
+                    <div class="hud-viewport" id="hudViewport">
+                        <div class="hud-grid"></div>
+                        <div class="hud-scanner-bar"></div>
+                        
+                        <!-- Telemetry HUD Overlay -->
+                        <div class="hud-overlay">
+                            <!-- HUD Header -->
+                            <div style="display:flex; justify-content:space-between; width:100%;">
+                                <div class="hud-telemetry-corner">
+                                    <div class="hud-telemetry-item">SYS: <span class="hud-telemetry-value">LA84_LENS_OS_V1.9</span></div>
+                                    <div class="hud-telemetry-item">BATTERY: <span class="hud-telemetry-value">84%</span></div>
+                                    <div class="hud-telemetry-item">STABILITY: <span class="hud-telemetry-value" style="color:var(--color-success);">OPTIMAL</span></div>
+                                </div>
+                                <div class="hud-telemetry-corner" style="align-items:flex-end;">
+                                    <div class="hud-telemetry-item">RUTH_VERIFY: <span class="hud-telemetry-value" style="color:var(--color-success);">PASS ✓</span></div>
+                                    <div class="hud-telemetry-item">MALLOC_HIST: <span class="hud-telemetry-value">RECORDING</span></div>
+                                    <div class="hud-telemetry-item">GPS_LOCK: <span class="hud-telemetry-value" id="hudGpsCoord">34.0124° N, 118.2871° W</span></div>
+                                </div>
+                            </div>
+
+                            <!-- Central Target Selector Reticle -->
+                            <div class="hud-aim-reticle"></div>
+
+                            <!-- Floating Target Indicator Cards -->
+                            <div class="hud-target-card" id="hudTargetVenue" style="top: 25%; left: 15%;">
+                                <div style="font-weight:bold; border-bottom:1px solid rgba(0,240,255,0.3); padding-bottom:3px; margin-bottom:4px;">TARGET VENUE</div>
+                                <div>Name: <span style="color:white; font-weight:bold;">LA Coliseum</span></div>
+                                <div>Path: <span style="color:var(--color-success); font-weight:bold;">Step-Free Ramp</span></div>
+                                <div>Slope: <span style="color:white;">2.1° (ACCESSFriendly)</span></div>
+                            </div>
+
+                            <div class="hud-target-card" id="hudTargetTransit" style="bottom: 25%; right: 15%;">
+                                <div style="font-weight:bold; border-bottom:1px solid rgba(0,240,255,0.3); padding-bottom:3px; margin-bottom:4px;">TRANSIT LINK</div>
+                                <div>MTA Line: <span style="color:white; font-weight:bold;">E Line (Expo)</span></div>
+                                <div>Platform: <span style="color:white;">Level Boarding</span></div>
+                                <div>Shuttle ETA: <span style="color:var(--color-warning); font-weight:bold;">4 mins</span></div>
+                            </div>
+
+                            <!-- HUD Footer Info -->
+                            <div style="display:flex; justify-content:space-between; width:100%; align-items:flex-end;">
+                                <div class="hud-telemetry-corner">
+                                    <div class="hud-telemetry-item">GRADE SLOPE: <span class="hud-telemetry-value" id="hudSlopeVal">1.8°</span></div>
+                                    <div class="hud-telemetry-item">CROWD DENSITY: <span class="hud-telemetry-value" id="hudCrowdVal">Low (12%)</span></div>
+                                </div>
+                                <div class="hud-telemetry-corner" style="align-items:flex-end;">
+                                    <div class="hud-telemetry-item">PRIVACY SHIELD: <span class="hud-telemetry-value" style="color:var(--accent-purple);">ACTIVE</span></div>
+                                    <div class="hud-telemetry-item">GESTURE LISTENERS: <span class="hud-telemetry-value" style="color:var(--accent-teal);">ACTIVE</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gesture & Telemetry Simulator Controls -->
+                    <div class="hud-controls-panel">
+                        <div class="glass-card" style="display:flex; flex-direction:column; gap:12px;">
+                            <h3 style="font-size:1.1rem; margin-bottom:5px;" data-i18n="gesture_controls_title">Simulated Gesture Commands</h3>
+                            <p style="font-size:0.75rem; color:var(--text-secondary);" data-i18n="gesture_controls_desc">Interact with the glasses HUD using emulated coordinate movements and hand gestures.</p>
+                            
+                            <button class="hud-btn" id="btnGesturePinch" onclick="simulateGesture('pinch')">
+                                <span>🤌</span> <span data-i18n="gesture_pinch">Pinch (Pin Target Venue)</span>
+                            </button>
+                            <button class="hud-btn" id="btnGestureSwipe" onclick="simulateGesture('swipe')">
+                                <span>🫱</span> <span data-i18n="gesture_swipe">Swipe (Toggle Metrics Overlay)</span>
+                            </button>
+                            <button class="hud-btn" id="btnGestureWave" onclick="simulateGesture('wave')">
+                                <span>👋</span> <span data-i18n="gesture_wave">Wave (Dismiss Live Alerts)</span>
+                            </button>
+                        </div>
+
+                        <!-- Real-time Telemetry Modifier -->
+                        <div class="glass-card" style="display:flex; flex-direction:column; gap:10px;">
+                            <h3 style="font-size:1rem;" data-i18n="telemetry_modifier_title">HUD Stream Overrides</h3>
+                            
+                            <label style="font-size:0.75rem; color:var(--text-secondary);" data-i18n="set_venue_focus">Focus Target Venue</label>
+                            <select id="hudVenueSelect" class="filter-select" onchange="updateHUDFocus(this.value)">
+                                <option value="coliseum">Exposition Park (Coliseum)</option>
+                                <option value="sofi">Inglewood (SoFi Stadium)</option>
+                                <option value="valley">Valley Complex 3 (Sepulveda Basin)</option>
+                                <option value="rosebowl">Pasadena (Rose Bowl)</option>
+                            </select>
+
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px;">
+                                <span style="font-size:0.8rem;" data-i18n="density_label">Simulate Density</span>
+                                <input type="range" id="densitySlider" min="5" max="95" value="25" style="width:100px; accent-color:var(--accent-teal);" oninput="updateHUDDensity(this.value)">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- TAB 5: GOOGLE STARTUP & NONPROFIT DECK -->
+            <section id="tab-pitch" class="content-section">
+                <div class="section-header">
+                    <div class="header-title-area">
+                        <h1 data-i18n="pitch_title">Google for Startups Presentation</h1>
+                        <p data-i18n="pitch_subtitle">A professional funding presentation and nonprofit grant application outline built for the Google Cloud Studio suite.</p>
+                    </div>
+                    <div class="badge badge-orange" id="pitchBadge">Slide 1 of 10</div>
+                </div>
+
+                <div class="pitch-container">
+                    <!-- Navigation and Export Options -->
+                    <div class="pitch-navigation">
+                        <div style="display:flex; gap:10px;">
+                            <button class="route-btn" style="background:rgba(255,255,255,0.05); border:1px solid var(--border-color); color:white;" id="btnPrevSlide" onclick="navigateSlide(-1)">
+                                ◀ Previous
+                            </button>
+                            <button class="route-btn" id="btnNextSlide" onclick="navigateSlide(1)">
+                                Next ▶
+                            </button>
+                        </div>
+                        <div style="display:flex; gap:10px; align-items:center;">
+                            <span style="font-size:0.8rem; font-family:var(--font-mono); color:var(--text-secondary);" id="slideNumberDisplay">SLIDE 1/10</span>
+                        </div>
+                    </div>
+
+                    <!-- Slide Presentation Canvas -->
+                    <div class="slide-viewer" id="slideViewer">
+                        <!-- Loaded dynamically via JS -->
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Core App Logic -->
+    <script src="app.js"></script>
+</body>
+</html>
