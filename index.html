@@ -46,6 +46,11 @@
                         <span class="icon">📊</span> <span data-i18n="nav_pitch">Startup Deck</span>
                     </button>
                 </li>
+                <li class="nav-item" id="navWorkforce">
+                    <button onclick="switchTab('workforce')" id="btnNavWorkforce">
+                        <span class="icon">💼</span> <span data-i18n="nav_workforce">ACoolWorkforce</span>
+                    </button>
+                </li>
             </nav>
 
             <div class="sidebar-footer">
@@ -461,6 +466,151 @@
                     <!-- Slide Presentation Canvas -->
                     <div class="slide-viewer" id="slideViewer">
                         <!-- Loaded dynamically via JS -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 6: ACoolWORKFORCE VR TRAINING PORTAL & VALLEY RESOURCES -->
+            <section id="tab-workforce" class="content-section">
+                <div class="section-header">
+                    <div class="header-title-area">
+                        <h1>ACoolWORKFORCE VR Command</h1>
+                        <p>Immersive Oculus VR concessions and stadium logistics training for homebound & mobility-challenged talent.</p>
+                    </div>
+                    <div class="badge badge-teal" id="oculusStatusPill">Oculus Ready</div>
+                </div>
+
+                <div class="transit-grid" style="grid-template-columns: 1fr 400px; height: auto;">
+                    
+                    <!-- Oculus VR Simulation Area -->
+                    <div style="display:flex; flex-direction:column; gap:20px;">
+                        <div class="hud-viewport" id="vrViewport" style="height: 480px; border-color: var(--accent-purple); box-shadow: 0 0 30px rgba(189,0,255,0.15);">
+                            <!-- Ambient Grid Background -->
+                            <div class="hud-grid" style="background-size: 50px 50px; opacity: 0.15;"></div>
+                            
+                            <!-- Virtual Concessions Stand Render Mockup -->
+                            <div style="position: absolute; inset: 0; display:flex; align-items:center; justify-content:center; flex-direction:column;">
+                                <!-- High Tech concessions overlay -->
+                                <svg width="100%" height="100%" viewBox="0 0 500 350" style="position:absolute; inset:0; pointer-events:none; z-index: 2;">
+                                    <!-- Stadium counter line -->
+                                    <path d="M 50 250 L 450 250" fill="none" stroke="var(--accent-purple)" stroke-width="6" stroke-linecap="round" style="filter: drop-shadow(0 0 6px var(--accent-purple));"/>
+                                    <!-- Cash Register / Terminal -->
+                                    <rect x="120" y="190" width="60" height="50" fill="rgba(0,240,255,0.2)" stroke="var(--accent-teal)" stroke-width="2" rx="4"/>
+                                    <line x1="150" y1="215" x2="150" y2="235" stroke="var(--accent-teal)" stroke-width="2"/>
+                                    
+                                    <!-- Wheelchair accessible low counter segment -->
+                                    <path d="M 230 280 L 330 280" fill="none" stroke="var(--color-success)" stroke-width="6" stroke-linecap="round" style="filter: drop-shadow(0 0 6px var(--color-success));"/>
+                                    <text x="280" y="270" fill="var(--color-success)" font-size="9" font-family="Space Grotesk" text-anchor="middle">ADA SECTION (33.5 INCHES)</text>
+
+                                    <!-- VR Trainee Hands Representation -->
+                                    <circle cx="150" cy="270" r="15" fill="rgba(255, 90, 31, 0.3)" stroke="var(--accent-orange)" stroke-width="2" id="vrHandL"/>
+                                    <circle cx="320" cy="290" r="15" fill="rgba(255, 90, 31, 0.3)" stroke="var(--accent-orange)" stroke-width="2" id="vrHandR"/>
+                                </svg>
+
+                                <!-- VR HUD Parameters -->
+                                <div class="hud-overlay" style="z-index: 3;">
+                                    <div style="display:flex; justify-content:space-between; width:100%;">
+                                        <div class="hud-telemetry-corner" style="color:var(--accent-purple);">
+                                            <div>MODULE: <span style="color:white;">CONCESSIONS_V2</span></div>
+                                            <div>PLATFORM: <span style="color:white;">META QUEST 3 / PRO</span></div>
+                                        </div>
+                                        <div class="hud-telemetry-corner" style="align-items:flex-end; color:var(--accent-purple);">
+                                            <div>TRAINEE: <span style="color:white;">Keith McPherson</span></div>
+                                            <div>FPS: <span style="color:var(--color-success);">90Hz (STABLE)</span></div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Glowing alert block inside VR -->
+                                    <div class="hud-target-card" id="vrInstructionsCard" style="top: 30%; left: 50%; transform: translateX(-50%); width: 320px; border-color: var(--accent-purple); background: rgba(10,0,20,0.85); box-shadow: 0 0 20px rgba(189,0,255,0.3);">
+                                        <div style="font-weight:bold; border-bottom:1px solid rgba(189,0,255,0.4); padding-bottom:3px; margin-bottom:5px; color:var(--accent-purple); text-align:center;">ACTIVE LESSON PROGRAM</div>
+                                        <div id="vrInstructionText" style="color:white; font-size:0.8rem; line-height:1.4;">Verify counter elevations, process ADA-compliant ticketing purchases, and guide paratransit riders. Tap below to simulate training inputs.</div>
+                                    </div>
+
+                                    <div style="display:flex; justify-content:space-between; width:100%; align-items:flex-end;">
+                                        <div class="hud-telemetry-corner" style="color:var(--accent-purple);">
+                                            <div>PROG: <span style="color:white;" id="vrProgressionValue">45% Complete</span></div>
+                                        </div>
+                                        <div class="hud-telemetry-corner" style="align-items:flex-end; color:var(--accent-purple);">
+                                            <div>STADIUM: <span style="color:white;">LA Coliseum Arena</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- VR Training Triggers -->
+                        <div class="glass-card" style="display:flex; flex-direction:row; gap:12px; flex-wrap:wrap; justify-content:space-between;">
+                            <button class="hud-btn" style="border-color:var(--accent-purple); color:var(--accent-purple); background:rgba(189,0,255,0.06);" onclick="simulateVRActivity('counter')">
+                                📏 Audit Counter Height
+                            </button>
+                            <button class="hud-btn" style="border-color:var(--accent-teal); color:var(--accent-teal); background:rgba(0,240,255,0.06);" onclick="simulateVRActivity('assist')">
+                                ♿ Assist Wheelchair Spectator
+                            </button>
+                            <button class="hud-btn" style="border-color:var(--accent-orange); color:var(--accent-orange); background:rgba(255,90,31,0.06);" onclick="simulateVRActivity('evac')">
+                                🚨 Evacuation Drill
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Side Panel: Resources and Stats -->
+                    <div style="display:flex; flex-direction:column; gap:20px;">
+                        
+                        <!-- VR Progression Metrics -->
+                        <div class="glass-card" style="padding:18px;">
+                            <h3 style="font-size:1.1rem; margin-bottom:12px; display:flex; align-items:center; gap:8px;">📊 Progression Matrix</h3>
+                            
+                            <div style="margin-bottom:12px;">
+                                <div style="display:flex; justify-content:space-between; font-size:0.8rem; margin-bottom:4px;">
+                                    <span>Trainee Progress Rate</span>
+                                    <span id="statProgressPercent">78%</span>
+                                </div>
+                                <div style="width:100%; height:6px; background:rgba(255,255,255,0.05); border-radius:3px; overflow:hidden;">
+                                    <div style="width:78%; height:100%; background:var(--accent-purple);" id="barProgressPercent"></div>
+                                </div>
+                            </div>
+
+                            <div style="margin-bottom:12px;">
+                                <div style="display:flex; justify-content:space-between; font-size:0.8rem; margin-bottom:4px;">
+                                    <span>ADA Compliance Index</span>
+                                    <span id="statCompliancePercent">98.6%</span>
+                                </div>
+                                <div style="width:100%; height:6px; background:rgba(255,255,255,0.05); border-radius:3px; overflow:hidden;">
+                                    <div style="width:98.6%; height:100%; background:var(--color-success);" id="barCompliancePercent"></div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div style="display:flex; justify-content:space-between; font-size:0.8rem; margin-bottom:4px;">
+                                    <span>Profitability & Concessions Uptime</span>
+                                    <span id="statProfitPercent">88%</span>
+                                </div>
+                                <div style="width:100%; height:6px; background:rgba(255,255,255,0.05); border-radius:3px; overflow:hidden;">
+                                    <div style="width:88%; height:100%; background:var(--accent-teal);" id="barProfitPercent"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Valley BusinessSource & WorkSource Directory -->
+                        <div class="glass-card" style="padding:18px; display:flex; flex-direction:column; gap:12px;">
+                            <h3 style="font-size:1.05rem; display:flex; align-items:center; gap:8px;">🏢 Valley Support Centers</h3>
+                            <p style="font-size:0.75rem; color:var(--text-secondary);">Direct contact details for small business funding, permits, and free professional career placement in the San Fernando Valley.</p>
+                            
+                            <select id="valleyResourceSelect" class="filter-select" onchange="showValleyResource(this.value)">
+                                <option value="northbsc">North Valley BusinessSource (Pacoima)</option>
+                                <option value="southbsc">South Valley BusinessSource (Van Nuys)</option>
+                                <option value="westbsc">West Valley BusinessSource (Reseda)</option>
+                                <option value="southwsc">South Valley WorkSource (Woodland Hills)</option>
+                                <option value="northwsc">Northeast Valley WorkSource (Sylmar)</option>
+                            </select>
+
+                            <div id="valleyResourceDetails" style="background:rgba(255,255,255,0.02); border:1px solid var(--border-color); padding:12px; border-radius:10px; font-size:0.8rem; line-height:1.5;">
+                                <div style="font-weight:bold; color:var(--accent-orange); margin-bottom:4px;" id="resourceName">North Valley BusinessSource Center</div>
+                                <div style="margin-bottom:4px;" id="resourceAddress">📍 Address: 13168 Van Nuys Blvd., Pacoima, CA 91331</div>
+                                <div style="margin-bottom:4px;" id="resourceEmail">✉️ Email: northvalleybsc@iconcdc.org</div>
+                                <div id="resourcePhone">📞 Phone: (818) 302-6114</div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </section>

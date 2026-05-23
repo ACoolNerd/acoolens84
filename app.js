@@ -870,6 +870,9 @@ function switchTab(tabName) {
     } else if (tabName === 'pitch') {
         document.getElementById("navPitch").classList.add("active");
         document.getElementById("tab-pitch").classList.add("active");
+    } else if (tabName === 'workforce') {
+        document.getElementById("navWorkforce").classList.add("active");
+        document.getElementById("tab-workforce").classList.add("active");
     }
 }
 
@@ -1201,4 +1204,113 @@ function navigateSlide(direction) {
     if (newIdx >= 0 && newIdx < slides.length) {
         renderSlide(newIdx);
     }
+}
+
+// ============================================================================
+// ACoolWORKFORCE - VR Oculus Concessions Simulator & Support Directory
+// ============================================================================
+
+// Valley Support Centers Data
+const valleyResources = {
+    northbsc: {
+        name: "North Valley BusinessSource Center",
+        address: "13168 Van Nuys Blvd., Pacoima, CA 91331",
+        email: "northvalleybsc@iconcdc.org",
+        phone: "(818) 302-6114"
+    },
+    southbsc: {
+        name: "South Valley BusinessSource Center",
+        address: "14553 Delano St., Suite 212, Van Nuys, CA 91411",
+        email: "southvalleybsc@iconcdc.org",
+        phone: "(818) 616-4118"
+    },
+    westbsc: {
+        name: "West Valley BusinessSource Center",
+        address: "18645 Sherman Way, #114, Reseda, CA 91335",
+        email: "westvalleybsc@mcslosangeles.com",
+        phone: "(747) 265-6201"
+    },
+    southwsc: {
+        name: "South Valley WorkSource Center & AJCC",
+        address: "20920 Warner Center Lane, Suite C, Woodland Hills, CA 91367",
+        email: "southvalleywsc@rescare.com",
+        phone: "(818) 237-9099"
+    },
+    northwsc: {
+        name: "Northeast San Fernando Valley WorkSource Center",
+        address: "LA Mission College Campus Center, 13356 Eldridge Ave, Sylmar, CA 91342",
+        email: "northeastwsc@lamission.edu",
+        phone: "(818) 482-1754"
+    }
+};
+
+function showValleyResource(key) {
+    const res = valleyResources[key];
+    if (res) {
+        document.getElementById("resourceName").textContent = res.name;
+        document.getElementById("resourceAddress").textContent = `📍 Address: ${res.address}`;
+        document.getElementById("resourceEmail").textContent = `✉️ Email: ${res.email}`;
+        document.getElementById("resourcePhone").textContent = `📞 Phone: ${res.phone}`;
+        
+        document.getElementById("diagnosticLogs").textContent += `\n[EWDD-DIRECTORY] Selected Support Center: ${res.name}`;
+    }
+}
+
+// VR Workforce Simulator Logic
+let vrProgression = 45;
+let vrCompliance = 98.6;
+let vrProfit = 88;
+
+function simulateVRActivity(type) {
+    const vrText = document.getElementById("vrInstructionText");
+    const handL = document.getElementById("vrHandL");
+    const handR = document.getElementById("vrHandR");
+    
+    // Animate hands inside VR
+    if (type === 'counter') {
+        handL.setAttribute("cx", "280");
+        handL.setAttribute("cy", "275");
+        handR.setAttribute("cx", "300");
+        handR.setAttribute("cy", "275");
+        
+        vrProgression = Math.min(100, vrProgression + 15);
+        vrCompliance = Math.min(100, parseFloat((vrCompliance + 0.4).toFixed(1)));
+        
+        vrText.innerHTML = `<strong style="color:var(--color-success);">ADA AUDIT SUCCESSFUL ✓</strong><br>Counter height verified at exactly 33.5 inches. Compliance secured. Star coach Sha'Carri Richardson says: <em>"A clean, level counter means everyone wins!"</em>`;
+        document.getElementById("diagnosticLogs").textContent += `\n[ACoolWORKFORCE] Trainee Keith McPherson completed ADA Counter Height Audit.`;
+        
+    } else if (type === 'assist') {
+        handL.setAttribute("cx", "250");
+        handL.setAttribute("cy", "285");
+        handR.setAttribute("cx", "270");
+        handR.setAttribute("cy", "285");
+        
+        vrProgression = Math.min(100, vrProgression + 20);
+        vrProfit = Math.min(100, vrProfit + 4);
+        
+        vrText.innerHTML = `<strong style="color:var(--accent-teal);">SPECTATOR SERVICE COMPLETED ✓</strong><br>Hydraulic terminal ramp deployed. Processed card ticketing transaction step-free. Star coach Noah Lyles says: <em>"That service speed was championship grade!"</em>`;
+        document.getElementById("diagnosticLogs").textContent += `\n[ACoolWORKFORCE] Trainee Keith McPherson assisted spectator with wheelchair boarding at POS terminal.`;
+        
+    } else if (type === 'evac') {
+        handL.setAttribute("cx", "100");
+        handL.setAttribute("cy", "240");
+        handR.setAttribute("cx", "400");
+        handR.setAttribute("cy", "240");
+        
+        vrProgression = Math.min(100, vrProgression + 25);
+        
+        vrText.innerHTML = `<strong style="color:var(--color-warning);">EVACUATION DRILL COMPLETED ✓</strong><br>Concessions gate powered down. Guided crowd flow directly to the step-free South Gate ramp. All occupants cleared.`;
+        document.getElementById("diagnosticLogs").textContent += `\n[ACoolWORKFORCE] Trainee Keith McPherson completed Concessions Evacuation Drill.`;
+    }
+    
+    // Update metrics in the UI
+    document.getElementById("vrProgressionValue").textContent = `${vrProgression}% Complete`;
+    document.getElementById("statProgressPercent").textContent = `${vrProgression}%`;
+    document.getElementById("barProgressPercent").style.width = `${vrProgression}%`;
+    
+    document.getElementById("statCompliancePercent").textContent = `${vrCompliance}%`;
+    document.getElementById("barCompliancePercent").style.width = `${vrCompliance}%`;
+    
+    document.getElementById("statProfitPercent").textContent = `${vrProfit}%`;
+    document.getElementById("barProfitPercent").style.width = `${vrProfit}%`;
 }
