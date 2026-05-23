@@ -1091,14 +1091,40 @@ function simulateGesture(type) {
 // Update HUD Stream Focus
 function updateHUDFocus(venueKey) {
     const venueNameMap = {
-        coliseum: { name: "LA Coliseum", slope: "1.8°", path: "Step-Free Ramp" },
-        sofi: { name: "Inglewood SoFi", slope: "0.5°", path: "Elevator Corridor" },
-        valley: { name: "Sepulveda Basin", slope: "0.0° (Flat)", path: "G-Line Busway" },
-        rosebowl: { name: "Pasadena RoseBowl", slope: "3.2°", path: "Accessible Shuttle" }
+        coliseum: { 
+            name: "LA Coliseum", 
+            slope: "1.8°", 
+            path: "Step-Free Ramp",
+            embed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3307.7289569766946!2d-118.28822072382103!3d34.01416957317135!2m3!1f340!2f25!3f0!3m2!1i1024!2i768!4f35!3m3!1m2!1s0x80c2f80872da1c13%3A0xe5a36399b9cf9c6b!2sLos%20Angeles%20Memorial%20Coliseum!5e1!3m2!1sen!2sus!4v1716499999999!5m2!1sen!2sus"
+        },
+        sofi: { 
+            name: "Inglewood SoFi", 
+            slope: "0.5°", 
+            path: "Elevator Corridor",
+            embed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3311.238466179326!2d-118.3418873238253!3d33.95346852309831!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c2b65100000001%3A0x6e2dfa3e9c8bc23!2sSoFi%20Stadium!5e0!3m2!1sen!2sus!4v1716500000000"
+        },
+        valley: { 
+            name: "Sepulveda Basin", 
+            slope: "0.0° (Flat)", 
+            path: "G-Line Busway",
+            embed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3299.78917822986!2d-118.50424562381121!3d34.17724281144078!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c2999e525167cb%3A0x5109b0b41c0989f6!2sSepulveda%20Basin%20Recreation%20Area!5e0!3m2!1sen!2sus!4v1716500000000"
+        },
+        rosebowl: { 
+            name: "Pasadena RoseBowl", 
+            slope: "3.2°", 
+            path: "Accessible Shuttle",
+            embed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3298.6656094595204!2d-118.17021642380979!3d34.205779012920235!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c2c312ad219d3b%3A0x4a18ad2efc272a8c!2sRose%20Bowl%20Stadium!5e0!3m2!1sen!2sus!4v1716500000000"
+        }
     };
 
     const details = venueNameMap[venueKey];
     if (details) {
+        // Update the iframe source dynamically inside the viewport!
+        const iframe = document.querySelector("#hudViewport iframe");
+        if (iframe) {
+            iframe.src = details.embed;
+        }
+
         document.getElementById("hudTargetVenue").innerHTML = `
             <div style="font-weight:bold; border-bottom:1px solid rgba(0,240,255,0.3); padding-bottom:3px; margin-bottom:4px;">TARGET VENUE</div>
             <div>Name: <span style="color:white; font-weight:bold;">${details.name}</span></div>

@@ -330,12 +330,23 @@
 
                 <div class="hud-simulation-container">
                     <!-- Virtual Viewport -->
-                    <div class="hud-viewport" id="hudViewport">
-                        <div class="hud-grid"></div>
-                        <div class="hud-scanner-bar"></div>
+                    <div class="hud-viewport" id="hudViewport" style="position: relative;">
+                        <!-- Live Interactive Street View of LA Coliseum (Opening Ceremony Venue) -->
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3307.7289569766946!2d-118.28822072382103!3d34.01416957317135!2m3!1f340!2f25!3f0!3m2!1i1024!2i768!4f35!3m3!1m2!1s0x80c2f80872da1c13%3A0xe5a36399b9cf9c6b!2sLos%20Angeles%20Memorial%20Coliseum!5e1!3m2!1sen!2sus!4v1716499999999!5m2!1sen!2sus" 
+                            width="100%" 
+                            height="100%" 
+                            style="border:0; filter: grayscale(0.3) contrast(1.1) brightness(0.9); opacity: 0.85; position: absolute; inset: 0; z-index: 1;" 
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+
+                        <div class="hud-grid" style="z-index: 2;"></div>
+                        <div class="hud-scanner-bar" style="z-index: 2;"></div>
                         
                         <!-- Telemetry HUD Overlay -->
-                        <div class="hud-overlay">
+                        <div class="hud-overlay" style="z-index: 3;">
                             <!-- HUD Header -->
                             <div style="display:flex; justify-content:space-between; width:100%;">
                                 <div class="hud-telemetry-corner">
