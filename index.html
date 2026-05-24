@@ -9,6 +9,22 @@
 </head>
 <body>
 
+    <!-- Mobile Header Navigation -->
+    <header class="mobile-header">
+        <button class="menu-toggle-btn" id="mobileMenuToggle" aria-label="Toggle Navigation menu" onclick="toggleMobileSidebar()">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+        <div class="mobile-brand">
+            <span class="mobile-logo">LA28 <b>LENS</b></span>
+            <span class="mobile-badge">ACCESSFriendly</span>
+        </div>
+        <div class="mobile-user-avatar">KM</div>
+    </header>
+
+    <div class="mobile-sidebar-overlay" id="mobileSidebarOverlay" onclick="toggleMobileSidebar()"></div>
+
     <div class="app-container">
         
         <!-- Sidebar Navigation -->
@@ -49,6 +65,21 @@
                 <li class="nav-item" id="navWorkforce">
                     <button onclick="switchTab('workforce')" id="btnNavWorkforce">
                         <span class="icon">💼</span> <span data-i18n="nav_workforce">ACoolWorkforce</span>
+                    </button>
+                </li>
+                <li class="nav-item" id="navCivic">
+                    <button onclick="switchTab('civic')" id="btnNavCivic">
+                        <span class="icon">🏛️</span> <span>Civic Mayors Dossier</span>
+                    </button>
+                </li>
+                <li class="nav-item" id="navFigma">
+                    <button onclick="switchTab('figma')" id="btnNavFigma">
+                        <span class="icon">📐</span> <span>Figma & Notion Wikis</span>
+                    </button>
+                </li>
+                <li class="nav-item" id="navPrompts">
+                    <button onclick="switchTab('prompts')" id="btnNavPrompts">
+                        <span class="icon">🧠</span> <span>AI Master Prompts</span>
                     </button>
                 </li>
             </nav>
@@ -612,6 +643,479 @@
                         </div>
 
                     </div>
+                </div>
+            </section>
+
+            <!-- TAB 7: CIVIC & MAYORS DOSSIERS -->
+            <section id="tab-civic" class="content-section">
+                <div class="section-header">
+                    <div class="header-title-area">
+                        <h1>Sovereign Civic & Governance Command</h1>
+                        <p>Direct governance, board dossiers, paratransit BETHBeta checklist, and RACI matrices in one integrated surface.</p>
+                    </div>
+                    <div class="badge badge-purple" id="civicMainPill">Governance Active</div>
+                </div>
+
+                <!-- Sub Tab Navigation -->
+                <div class="companion-selector" style="margin-bottom: 25px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; gap: 15px;">
+                    <button class="route-btn" style="background: var(--accent-purple); box-shadow: none; font-size: 0.9rem; color: white;" id="btnCivicSubValley" onclick="switchCivicSub('valley')">
+                        <span>🏛️</span> Valley Municipalities
+                    </button>
+                    <button class="route-btn" style="background: rgba(0,0,0,0.05); border: 1px solid var(--border-color); color: var(--text-primary); box-shadow: none; font-size: 0.9rem;" id="btnCivicSubBoard" onclick="switchCivicSub('board')">
+                        <span>👥</span> LA28 & Metro Board Dossiers
+                    </button>
+                    <button class="route-btn" style="background: rgba(0,0,0,0.05); border: 1px solid var(--border-color); color: var(--text-primary); box-shadow: none; font-size: 0.9rem;" id="btnCivicSubProtocol" onclick="switchCivicSub('protocol')">
+                        <span>📋</span> BETHBeta & RACI Matrix
+                    </button>
+                </div>
+
+                <!-- SUB-TAB 1: VALLEY MUNICIPALITIES -->
+                <div id="civic-sub-valley" class="civic-sub-content">
+                    <div class="transit-grid" style="grid-template-columns: 350px 1fr; height: auto;">
+                        <!-- Controller Card -->
+                        <div style="display:flex; flex-direction:column; gap:20px;">
+                            <div class="glass-card" style="padding:18px; display:flex; flex-direction:column; gap:12px;">
+                                <label style="font-weight:700; font-size:0.85rem;">Focus Valley Incorporated City</label>
+                                <select id="civicCitySelect" class="filter-select" style="width:100%;" onchange="showCivicCity(this.value)">
+                                    <option value="burbank">City of Burbank</option>
+                                    <option value="calabasas">City of Calabasas</option>
+                                    <option value="glendale">City of Glendale</option>
+                                    <option value="hiddenhills">City of Hidden Hills</option>
+                                    <option value="sanfernando">City of San Fernando</option>
+                                    <option value="pacoima">Pacoima (LA Council District 7)</option>
+                                    <option value="vannuys">Van Nuys (LA Council District 6)</option>
+                                </select>
+                                <button class="route-btn" style="background:var(--accent-purple); box-shadow: 0 4px 12px rgba(114, 9, 183, 0.2);" onclick="showCivicCity(document.getElementById('civicCitySelect').value)">
+                                    <span>🏛️</span> Load Civic Roster
+                                </button>
+                            </div>
+                            <!-- General Information Card -->
+                            <div class="glass-card" style="padding:18px;">
+                                <h4 style="font-size:0.9rem; margin-bottom:8px;">Valley Demographics</h4>
+                                <p style="font-size:0.75rem; color:var(--text-secondary); line-height:1.5;">
+                                    The San Fernando Valley is home to nearly 1.8 million residents, making it a critical voting block and key economic sector of Los Angeles. Fully 100% of these municipalities partner under The Valley Economic Alliance to support accessibility, tech startups, and local transit.
+                                </p>
+                            </div>
+                        </div>
+                        <!-- Dynamic Details Card -->
+                        <div class="glass-card" style="padding:24px; min-height:350px;">
+                            <div id="civicDetailsContainer">
+                                <h2 style="font-size:1.6rem; margin-bottom:12px; color:var(--accent-purple);" id="civicCityName">City of Burbank</h2>
+                                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:20px; margin-bottom:20px;">
+                                    <div style="background:rgba(0,0,0,0.015); border:1px solid var(--border-color); padding:16px; border-radius:10px;">
+                                        <div style="font-size:0.7rem; font-weight:800; color:var(--accent-orange); text-transform:uppercase; margin-bottom:4px;">Mayor</div>
+                                        <div style="font-size:1.1rem; font-weight:700;" id="civicMayor">Tamala Takahashi</div>
+                                        <div style="font-size:0.75rem; color:var(--text-secondary);" id="civicMayorTerm">Term: Dec 2025 - Dec 2026</div>
+                                    </div>
+                                    <div style="background:rgba(0,0,0,0.015); border:1px solid var(--border-color); padding:16px; border-radius:10px;">
+                                        <div style="font-size:0.7rem; font-weight:800; color:var(--accent-purple); text-transform:uppercase; margin-bottom:4px;">Vice Mayor / Pro Tem</div>
+                                        <div style="font-size:1.1rem; font-weight:700;" id="civicViceMayor">Zizette Mullins</div>
+                                    </div>
+                                </div>
+                                <div style="margin-bottom:20px;">
+                                    <h3 style="font-size:1.05rem; margin-bottom:8px; border-bottom:1px solid var(--border-color); padding-bottom:4px;">Active City Council Seats</h3>
+                                    <ul style="list-style:none; display:flex; flex-direction:column; gap:8px;" id="civicCouncilList">
+                                        <li class="slide-bullet" style="color:var(--text-secondary); font-size:0.9rem;">Konstantine Anthony</li>
+                                        <li class="slide-bullet" style="color:var(--text-secondary); font-size:0.9rem;">Nikki Perez</li>
+                                        <li class="slide-bullet" style="color:var(--text-secondary); font-size:0.9rem;">Christopher John Rizzotti</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h3 style="font-size:1.05rem; margin-bottom:8px; border-bottom:1px solid var(--border-color); padding-bottom:4px;">ACCESSFriendly Focus Area</h3>
+                                    <p style="font-size:0.9rem; color:var(--text-secondary); line-height:1.5;" id="civicFocusArea">
+                                        Prioritizing step-free boarding access at the Burbank Downtown Metrolink transit station and level bus curb transfers.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SUB-TAB 2: LA28 & METRO BOARD DOSSIERS -->
+                <div id="civic-sub-board" class="civic-sub-content" style="display:none;">
+                    <div style="display:flex; flex-direction:column; gap:20px;">
+                        <div class="outage-simulator" style="background: rgba(114, 9, 183, 0.04); border-color: rgba(114, 9, 183, 0.12);">
+                            <div class="outage-title" style="color: var(--accent-purple);">
+                                <span>🛡️</span> Outreach Boundary & Sovereign Notice
+                            </div>
+                            <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.5;">
+                                Under sovereign lobbying and board boundaries, all tech discovery alignment must maintain pure evidence-based metrics. The following are verified public dossiers for preparation only, and do not represent formal affiliations.
+                            </p>
+                        </div>
+                        
+                        <div class="dashboard-grid">
+                            <div class="glass-card" style="display:flex; flex-direction:column; gap:10px;">
+                                <div style="font-size:0.75rem; font-weight:700; color:var(--accent-orange);">BOARD MEMBER CHAIR</div>
+                                <h3 style="font-size:1.15rem; font-weight:700;">Fernando Dutra</h3>
+                                <p style="font-size:0.8rem; color:var(--text-secondary);">Role: LA Metro Board Chair & Whittier Representative</p>
+                                <p style="font-size:0.85rem; line-height:1.5;">Coordinates 2028 Olympic and Paralympic preparation and transportation routing sync between municipalities.</p>
+                                <span class="price-tag-budget" style="align-self:flex-start; background:rgba(255,107,0,0.1); color:var(--accent-orange); border-color:rgba(255,107,0,0.2);">Coordinating Lead</span>
+                            </div>
+
+                            <div class="glass-card" style="display:flex; flex-direction:column; gap:10px;">
+                                <div style="font-size:0.75rem; font-weight:700; color:var(--accent-purple);">LA CITY MAYOR</div>
+                                <h3 style="font-size:1.15rem; font-weight:700;">Karen Bass</h3>
+                                <p style="font-size:0.8rem; color:var(--text-secondary);">Role: LA City Mayor & Metro Director</p>
+                                <p style="font-size:0.85rem; line-height:1.5;">Focuses on car-less visitor experience corridors, step-free subway hubs, and equity outreach for local workforce development.</p>
+                                <span class="price-tag-budget" style="align-self:flex-start; background:rgba(114,9,183,0.1); color:var(--accent-purple); border-color:rgba(114,9,183,0.2);">Executive Director</span>
+                            </div>
+
+                            <div class="glass-card" style="display:flex; flex-direction:column; gap:10px;">
+                                <div style="font-size:0.75rem; font-weight:700; color:var(--accent-teal);">GLENDALE REPRESENTATIVE</div>
+                                <h3 style="font-size:1.15rem; font-weight:700;">Ara Najarian</h3>
+                                <p style="font-size:0.8rem; color:var(--text-secondary);">Role: Glendale Councilmember & Metro Board Director</p>
+                                <p style="font-size:0.85rem; line-height:1.5;">Advocates low-floor Beeline routes and level-boarding light rail transfers for SFV-adjacent visitors.</p>
+                                <span class="price-tag-budget" style="align-self:flex-start; background:rgba(0,168,150,0.1); color:var(--accent-teal); border-color:rgba(0,168,150,0.2);">Valley Representative</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SUB-TAB 3: BETHBETA PROTOCOL & RACI MATRIX -->
+                <div id="civic-sub-protocol" class="civic-sub-content" style="display:none;">
+                    <div style="display:flex; flex-direction:column; gap:25px;">
+                        
+                        <!-- BETHBeta 7 Gates Checklist -->
+                        <div class="glass-card" style="padding:22px;">
+                            <h3 style="font-size:1.2rem; margin-bottom:12px; color:var(--accent-orange);">📋 BETHBeta 7-Gate Paratransit Checklist</h3>
+                            <p style="font-size:0.8rem; color:var(--text-secondary); margin-bottom:15px;">Governed compliance gates ensuring 100% paratransit readiness before launching global scheduling corridors.</p>
+                            
+                            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:12px;">
+                                <div style="display:flex; align-items:center; gap:10px; padding:10px; background:rgba(0,0,0,0.015); border:1px solid var(--border-color); border-radius:8px;">
+                                    <span style="font-size:1.3rem; color:var(--color-success);">✅</span>
+                                    <div>
+                                        <div style="font-size:0.8rem; font-weight:bold;">Gate 1: Board Audit</div>
+                                        <div style="font-size:0.7rem; color:var(--text-secondary);">15 dossiers indexed</div>
+                                    </div>
+                                </div>
+                                <div style="display:flex; align-items:center; gap:10px; padding:10px; background:rgba(0,0,0,0.015); border:1px solid var(--border-color); border-radius:8px;">
+                                    <span style="font-size:1.3rem; color:var(--color-success);">✅</span>
+                                    <div>
+                                        <div style="font-size:0.8rem; font-weight:bold;">Gate 2: Evidence Check</div>
+                                        <div style="font-size:0.7rem; color:var(--text-secondary);">Source manifest verified</div>
+                                    </div>
+                                </div>
+                                <div style="display:flex; align-items:center; gap:10px; padding:10px; background:rgba(0,0,0,0.015); border:1px solid var(--border-color); border-radius:8px;">
+                                    <span style="font-size:1.3rem; color:var(--color-success);">✅</span>
+                                    <div>
+                                        <div style="font-size:0.8rem; font-weight:bold;">Gate 3: Transit Sync</div>
+                                        <div style="font-size:0.7rem; color:var(--text-secondary);">9 Metro Lines mapped</div>
+                                    </div>
+                                </div>
+                                <div style="display:flex; align-items:center; gap:10px; padding:10px; background:rgba(0,0,0,0.015); border:1px solid var(--border-color); border-radius:8px;">
+                                    <span style="font-size:1.3rem; color:var(--color-success);">✅</span>
+                                    <div>
+                                        <div style="font-size:0.8rem; font-weight:bold;">Gate 4: Human Persona</div>
+                                        <div style="font-size:0.7rem; color:var(--text-secondary);">8 Langs active</div>
+                                    </div>
+                                </div>
+                                <div style="display:flex; align-items:center; gap:10px; padding:10px; background:rgba(0,0,0,0.015); border:1px solid var(--border-color); border-radius:8px;">
+                                    <span style="font-size:1.3rem; color:var(--color-success);">✅</span>
+                                    <div>
+                                        <div style="font-size:0.8rem; font-weight:bold;">Gate 5: Beta Pilot</div>
+                                        <div style="font-size:0.7rem; color:var(--text-secondary);">Outage re-routes secure</div>
+                                    </div>
+                                </div>
+                                <div style="display:flex; align-items:center; gap:10px; padding:10px; background:rgba(0,0,0,0.015); border:1px solid var(--border-color); border-radius:8px;">
+                                    <span style="font-size:1.3rem; color:var(--accent-orange);">⏳</span>
+                                    <div>
+                                        <div style="font-size:0.8rem; font-weight:bold; color:var(--accent-orange);">Gate 6: HUD Sync</div>
+                                        <div style="font-size:0.7rem; color:var(--text-secondary);">Swift SDK under review</div>
+                                    </div>
+                                </div>
+                                <div style="display:flex; align-items:center; gap:10px; padding:10px; background:rgba(0,0,0,0.015); border:1px solid var(--border-color); border-radius:8px;">
+                                    <span style="font-size:1.3rem; color:var(--accent-orange);">⏳</span>
+                                    <div>
+                                        <div style="font-size:0.8rem; font-weight:bold; color:var(--accent-orange);">Gate 7: Rollout</div>
+                                        <div style="font-size:0.7rem; color:var(--text-secondary);">Awaiting final RUTH signoff</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- RACI Matrix Table -->
+                        <div class="glass-card" style="padding:22px; overflow-x:auto;">
+                            <h3 style="font-size:1.2rem; margin-bottom:12px; color:var(--accent-purple);">📊 RACI Matrix Responsibilities</h3>
+                            
+                            <table style="width:100%; border-collapse:collapse; text-align:left; font-size:0.8rem; line-height:1.5;">
+                                <thead>
+                                    <tr style="border-bottom: 2px solid var(--border-color); font-weight:700;">
+                                        <th style="padding:8px 12px;">Workstream Track</th>
+                                        <th style="padding:8px 12px;">Keith M.</th>
+                                        <th style="padding:8px 12px;">Alain R.</th>
+                                        <th style="padding:8px 12px;">LA MTA</th>
+                                        <th style="padding:8px 12px;">Google AI</th>
+                                        <th style="padding:8px 12px;">SOSC Beta</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="border-bottom: 1px solid var(--border-color);">
+                                        <td style="padding:8px 12px; font-weight:600;">Data Ingestion & PDF Parser</td>
+                                        <td style="padding:8px 12px; color:var(--accent-orange); font-weight:700;">A</td>
+                                        <td style="padding:8px 12px; color:var(--accent-purple); font-weight:700;">R</td>
+                                        <td style="padding:8px 12px; color:var(--text-muted);">I</td>
+                                        <td style="padding:8px 12px; color:var(--accent-teal); font-weight:700;">C</td>
+                                        <td style="padding:8px 12px; color:var(--text-muted);">I</td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid var(--border-color);">
+                                        <td style="padding:8px 12px; font-weight:600;">Adaptive Routing Calculations</td>
+                                        <td style="padding:8px 12px; color:var(--accent-purple); font-weight:700;">R</td>
+                                        <td style="padding:8px 12px; color:var(--accent-orange); font-weight:700;">A</td>
+                                        <td style="padding:8px 12px; color:var(--accent-teal); font-weight:700;">C</td>
+                                        <td style="padding:8px 12px; color:var(--accent-teal); font-weight:700;">C</td>
+                                        <td style="padding:8px 12px; color:var(--accent-teal); font-weight:700;">C</td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid var(--border-color);">
+                                        <td style="padding:8px 12px; font-weight:600;">VR Oculus Simulator Training</td>
+                                        <td style="padding:8px 12px; color:var(--accent-orange); font-weight:700;">A</td>
+                                        <td style="padding:8px 12px; color:var(--text-muted);">I</td>
+                                        <td style="padding:8px 12px; color:var(--accent-teal); font-weight:700;">C</td>
+                                        <td style="padding:8px 12px; color:var(--accent-purple); font-weight:700;">R</td>
+                                        <td style="padding:8px 12px; color:var(--accent-purple); font-weight:700;">R</td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid var(--border-color);">
+                                        <td style="padding:8px 12px; font-weight:600;">Ray-Ban Meta Sunglasses HUD</td>
+                                        <td style="padding:8px 12px; color:var(--accent-orange); font-weight:700;">A</td>
+                                        <td style="padding:8px 12px; color:var(--accent-purple); font-weight:700;">R</td>
+                                        <td style="padding:8px 12px; color:var(--text-muted);">I</td>
+                                        <td style="padding:8px 12px; color:var(--accent-teal); font-weight:700;">C</td>
+                                        <td style="padding:8px 12px; color:var(--text-muted);">I</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 8: FIGMA WIREFRAMES & NOTION WIKIS -->
+            <section id="tab-figma" class="content-section">
+                <div class="section-header">
+                    <div class="header-title-area">
+                        <h1>Figma Wireframes & Notion Wikis</h1>
+                        <p>Unified enterprise dashboard mockup showcasing Figma UI designs and Notion workspace structure.</p>
+                    </div>
+                    <div class="badge badge-teal">Master Mockups</div>
+                </div>
+
+                <div class="dashboard-grid" style="grid-template-columns: 320px 1fr;">
+                    
+                    <!-- Notion Sidebar Layout -->
+                    <div class="glass-card" style="padding:18px; display:flex; flex-direction:column; gap:15px; background:#FAFAFD;">
+                        <div style="font-weight:800; font-size:0.8rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px;">📂 Notion Master Wiki</div>
+                        
+                        <div style="display:flex; flex-direction:column; gap:10px;">
+                            <div style="display:flex; align-items:center; gap:8px; font-weight:700; font-size:0.85rem; cursor:pointer; color:var(--accent-orange);"><span class="icon">📘</span> BETHBeta Protocol Wiki</div>
+                            <div style="display:flex; align-items:center; gap:8px; font-weight:700; font-size:0.85rem; cursor:pointer; padding-left:12px; color:var(--text-secondary);"><span class="icon">📄</span> BRD Governance Specs</div>
+                            <div style="display:flex; align-items:center; gap:8px; font-weight:700; font-size:0.85rem; cursor:pointer; padding-left:12px; color:var(--text-secondary);"><span class="icon">📄</span> RACI Responsibility Grid</div>
+                            <div style="display:flex; align-items:center; gap:8px; font-weight:700; font-size:0.85rem; cursor:pointer; padding-left:12px; color:var(--text-secondary);"><span class="icon">📄</span> 15 Metro Board Dossiers</div>
+                            
+                            <div style="display:flex; align-items:center; gap:8px; font-weight:700; font-size:0.85rem; cursor:pointer; color:var(--accent-purple); margin-top:5px;"><span class="icon">🎮</span> ACoolWorkforce VR Game</div>
+                            <div style="display:flex; align-items:center; gap:8px; font-weight:700; font-size:0.85rem; cursor:pointer; padding-left:12px; color:var(--text-secondary);"><span class="icon">📄</span> Oculus Quest 3 Configs</div>
+                            <div style="display:flex; align-items:center; gap:8px; font-weight:700; font-size:0.85rem; cursor:pointer; padding-left:12px; color:var(--text-secondary);"><span class="icon">📄</span> Concessions Real-time Data</div>
+                            
+                            <div style="display:flex; align-items:center; gap:8px; font-weight:700; font-size:0.85rem; cursor:pointer; color:var(--accent-teal); margin-top:5px;"><span class="icon">⚙️</span> Sovereign Cloud Platform</div>
+                            <div style="display:flex; align-items:center; gap:8px; font-weight:700; font-size:0.85rem; cursor:pointer; padding-left:12px; color:var(--text-secondary);"><span class="icon">📄</span> Google Cloud Startups Pack</div>
+                            <div style="display:flex; align-items:center; gap:8px; font-weight:700; font-size:0.85rem; cursor:pointer; padding-left:12px; color:var(--text-secondary);"><span class="icon">📄</span> AWS Activate Applications</div>
+                        </div>
+
+                        <div style="margin-top:20px; border-top:1px solid var(--border-color); padding-top:15px; font-size:0.75rem; color:var(--text-muted); line-height:1.4;">
+                            💡 <em>All markdown specifications are locked and loaded directly in the master code package.</em>
+                        </div>
+                    </div>
+
+                    <!-- Figma Wireframe Workspace Canvas -->
+                    <div class="glass-card" style="padding:20px; display:flex; flex-direction:column; gap:15px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <div style="font-weight:800; font-size:0.8rem; color:var(--text-muted); text-transform:uppercase;">📐 Figma Canvas Board</div>
+                            <span class="badge badge-teal" style="font-size:0.6rem;">Figma Live Mockup</span>
+                        </div>
+
+                        <!-- Figma Wireframe Layout Representation -->
+                        <div style="background:#FAF8F5; border-radius:12px; padding:20px; min-height:420px; color:var(--text-primary); position:relative; overflow:hidden; display:flex; flex-direction:column; justify-content:space-between; font-family:var(--font-mono); border:1px solid var(--border-color); box-shadow: inset 0 0 10px rgba(0,0,0,0.02);">
+                            <!-- Canvas background grid dots -->
+                            <div class="hud-grid" style="background-size: 20px 20px; opacity: 0.12; background-image: radial-gradient(var(--text-muted) 1px, transparent 1px);"></div>
+                            
+                            <!-- Header status -->
+                            <div style="display:flex; justify-content:space-between; font-size:0.7rem; color:var(--text-secondary); z-index:2; font-weight:700;">
+                                <span>Canvas: [LA84_Lens_v2.0_Mockups]</span>
+                                <span>Zoom: 100% (FIT)</span>
+                            </div>
+
+                            <!-- Screen layout columns -->
+                            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:20px; margin:30px 0; z-index:2;">
+                                
+                                <!-- Screen A: Mobile App -->
+                                <div style="background:#FFFFFF; border:1px solid var(--border-color); border-radius:8px; padding:12px; min-height:260px; display:flex; flex-direction:column; justify-content:space-between; box-shadow: var(--shadow-sm);">
+                                    <div style="font-size:0.65rem; color:var(--text-muted); border-bottom:1px solid var(--border-color); padding-bottom:4px; font-weight:700;">📱 MOBILE APP SHELL</div>
+                                    <div style="display:flex; flex-direction:column; gap:8px; margin:15px 0;">
+                                        <div style="height:25px; background:var(--bg-void); border-radius:4px; display:flex; align-items:center; padding-left:8px; font-size:0.6rem; color:var(--text-secondary); border:1px solid var(--border-color);">🔍 Search Schedule...</div>
+                                        <div style="height:55px; background:rgba(255,107,0,0.06); border:1px dashed var(--accent-orange); border-radius:4px; display:flex; flex-direction:column; justify-content:center; padding-left:8px; gap:3px;">
+                                            <div style="font-size:0.6rem; font-weight:bold; color:var(--accent-orange);">Valley Complex 3</div>
+                                            <div style="font-size:0.5rem; color:var(--text-secondary);">3x3 Basketball - $28 Ticket</div>
+                                        </div>
+                                        <div style="height:35px; background:var(--bg-void); border-radius:4px; display:flex; align-items:center; padding-left:8px; font-size:0.55rem; color:var(--text-secondary); border:1px solid var(--border-color);">🚇 Route: G-Line Busway</div>
+                                    </div>
+                                    <div style="font-size:0.55rem; text-align:center; color:var(--accent-orange); font-weight:bold;">SCREEN 1 — MAIN SEARCH</div>
+                                </div>
+
+                                <!-- Screen B: VR Oculus Concessions -->
+                                <div style="background:#FFFFFF; border:1px solid var(--border-color); border-radius:8px; padding:12px; min-height:260px; display:flex; flex-direction:column; justify-content:space-between; box-shadow: var(--shadow-sm);">
+                                    <div style="font-size:0.65rem; color:var(--text-muted); border-bottom:1px solid var(--border-color); padding-bottom:4px; font-weight:700;">🎮 OCULUS QUEST HUD</div>
+                                    <div style="display:flex; flex-direction:column; gap:8px; margin:15px 0; align-items:center; justify-content:center; height:120px; position:relative;">
+                                        <div style="border: 2px dashed var(--accent-purple); border-radius:50%; width:50px; height:50px; display:flex; align-items:center; justify-content:center; font-size:0.5rem; color:var(--accent-purple);">VR View</div>
+                                        <div style="font-size:0.55rem; color:var(--color-success); margin-top:8px; font-weight:700;">Low ADA counter: 33.5" ✓</div>
+                                        <div style="font-size:0.5rem; color:var(--text-secondary); text-align:center;">Process ticket sale hydraulic boarding</div>
+                                    </div>
+                                    <div style="font-size:0.55rem; text-align:center; color:var(--accent-purple); font-weight:bold;">SCREEN 2 — QUEST 3 TRAINING</div>
+                                </div>
+
+                                <!-- Screen C: Ray-Ban Meta AR HUD -->
+                                <div style="background:#FFFFFF; border:1px solid var(--border-color); border-radius:8px; padding:12px; min-height:260px; display:flex; flex-direction:column; justify-content:space-between; box-shadow: var(--shadow-sm);">
+                                    <div style="font-size:0.65rem; color:var(--text-muted); border-bottom:1px solid var(--border-color); padding-bottom:4px; font-weight:700;">🕶️ RAY-BAN GLASSES HUD</div>
+                                    <div style="display:flex; flex-direction:column; gap:8px; margin:15px 0;">
+                                        <div style="font-size:0.55rem; color:var(--accent-teal); display:flex; justify-content:space-between; font-weight:700;"><span>GPS LOCK: OK</span><span>BAT: 84%</span></div>
+                                        <div style="border:1px dashed rgba(0,168,150,0.3); height:60px; border-radius:4px; display:flex; align-items:center; justify-content:center; font-size:0.5rem; color:var(--accent-teal); font-weight:700; background:rgba(0,168,150,0.02);">Aim Reticle [+]</div>
+                                        <div style="font-size:0.55rem; color:var(--color-success); font-weight:bold; text-align:center; background:rgba(16,185,129,0.08); padding:3px; border-radius:2px; border:1px solid rgba(16,185,129,0.15);">RUTH: VERIFIED</div>
+                                    </div>
+                                    <div style="font-size:0.55rem; text-align:center; color:var(--accent-teal); font-weight:bold;">SCREEN 3 — TELEMETRY GLASSES</div>
+                                </div>
+
+                            </div>
+
+                            <!-- Footer pointers -->
+                            <div style="display:flex; justify-content:space-between; font-size:0.65rem; color:var(--text-secondary); border-top:1px solid var(--border-color); padding-top:8px; z-index:2; font-weight:700;">
+                                <span>Cursor: X: 34.05° Y: -118.24°</span>
+                                <span>ACoolBrand System UI Canvas</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 9: AI MASTER PROMPT LIBRARY -->
+            <section id="tab-prompts" class="content-section">
+                <div class="section-header">
+                    <div class="header-title-area">
+                        <h1>AI Master Prompt Library</h1>
+                        <p>Consolidated, copy-pasteable system prompts designed for Claude, Codex, and ChatGPT to continue building the ecosystem.</p>
+                    </div>
+                    <div class="badge badge-orange">Prompt Engineering</div>
+                </div>
+
+                <div class="glass-card" style="display:flex; flex-direction:column; gap:20px;">
+                    <div style="font-size:0.9rem; color:var(--text-secondary); line-height:1.5;">
+                        Use these pre-tested system prompts directly in your AI interfaces to maintain consistency and expand the codebase while maintaining perfect compliance with the BETHBeta, BRD, and RACI governance frames.
+                    </div>
+
+                    <!-- Prompt 1 -->
+                    <div style="background:rgba(0,0,0,0.015); border:1px solid var(--border-color); border-radius:12px; padding:20px; display:flex; flex-direction:column; gap:10px;">
+                        <div style="font-weight:bold; font-size:1.05rem; color:var(--accent-orange); display:flex; justify-content:space-between; align-items:center;">
+                            <span>1. Data Normalizer & Schedule Ingestion Prompt</span>
+                            <div style="display:flex; align-items:center; gap:8px;">
+                                <span style="font-size:0.7rem; background:rgba(255,90,0,0.1); color:var(--accent-orange); padding:2px 8px; border-radius:4px;">Normalizer</span>
+                                <button class="btn-xs" onclick="copyPromptText('prompt-norm', this)" style="font-family:var(--font-sans); font-weight:700;">Copy Prompt</button>
+                            </div>
+                        </div>
+                        <pre id="prompt-norm" style="background:#FAF8F5; color:var(--text-primary); padding:15px; border-radius:8px; font-family:var(--font-mono); font-size:0.75rem; overflow-x:auto; line-height:1.4; border:1px solid var(--border-color);">
+You are the LA28 Master Schedule Normalizer.
+Your goal is to parse unstructured PDF text or spreadsheets containing Olympic event sessions and format them into the strict 7-field schema.
+
+Fields:
+1. `id` (string, unique sessionCode)
+2. `title` (string, sport + session code)
+3. `summary` (string, exact session description)
+4. `prices` (key-value pair object of ticket categories A-J)
+5. `relationships` (object containing: zone, venue, startTime, endTime, date)
+6. `readiness` (readiness rating score out of 100)
+7. `audit` (audit logs tracking original source pdf references)
+
+Ensure that all float prices are validated, N/A strings are skipped, and serial dates are converted to YYYY-MM-DD.
+                        </pre>
+                    </div>
+
+                    <!-- Prompt 2 -->
+                    <div style="background:rgba(0,0,0,0.015); border:1px solid var(--border-color); border-radius:12px; padding:20px; display:flex; flex-direction:column; gap:10px;">
+                        <div style="font-weight:bold; font-size:1.05rem; color:var(--accent-purple); display:flex; justify-content:space-between; align-items:center;">
+                            <span>2. ACCESSFriendly Telemetry Auditor Prompt</span>
+                            <div style="display:flex; align-items:center; gap:8px;">
+                                <span style="font-size:0.7rem; background:rgba(114,9,183,0.1); color:var(--accent-purple); padding:2px 8px; border-radius:4px;">Auditor</span>
+                                <button class="btn-xs" onclick="copyPromptText('prompt-audit', this)" style="font-family:var(--font-sans); font-weight:700;">Copy Prompt</button>
+                            </div>
+                        </div>
+                        <pre id="prompt-audit" style="background:#FAF8F5; color:var(--text-primary); padding:15px; border-radius:8px; font-family:var(--font-mono); font-size:0.75rem; overflow-x:auto; line-height:1.4; border:1px solid var(--border-color);">
+You are the ACCESSFriendly Telemetry Auditor.
+Your goal is to evaluate geographic routing coordinates, grade slopes, platform level boarding gates, and elevator uptime logs at crucial transit transfer hubs in Los Angeles.
+
+Rules:
+1. Evaluate station elevators. If an outage is flagged, dynamically redirect the route via alternative paratransit vans or accessible bus lines (G-Line Busway level boarding).
+2. Calculate ramp grade slopes: highlight in RED any ramps exceeding the ADA standard of 8.33% (4.76°).
+3. Draft clear, step-by-step paratransit routing directions for wheelchair and mobility-aid spectators.
+                        </pre>
+                    </div>
+
+                    <!-- Prompt 3 -->
+                    <div style="background:rgba(0,0,0,0.015); border:1px solid var(--border-color); border-radius:12px; padding:20px; display:flex; flex-direction:column; gap:10px;">
+                        <div style="font-weight:bold; font-size:1.05rem; color:var(--accent-teal); display:flex; justify-content:space-between; align-items:center;">
+                            <span>3. Oculus Quest VR Concessions Training Prompt</span>
+                            <div style="display:flex; align-items:center; gap:8px;">
+                                <span style="font-size:0.7rem; background:rgba(0,168,150,0.1); color:var(--accent-teal); padding:2px 8px; border-radius:4px;">Concessions</span>
+                                <button class="btn-xs" onclick="copyPromptText('prompt-concessions', this)" style="font-family:var(--font-sans); font-weight:700;">Copy Prompt</button>
+                            </div>
+                        </div>
+                        <pre id="prompt-concessions" style="background:#FAF8F5; color:var(--text-primary); padding:15px; border-radius:8px; font-family:var(--font-mono); font-size:0.75rem; overflow-x:auto; line-height:1.4; border:1px solid var(--border-color);">
+You are the Oculus VR concessions Trainer Assistant.
+You roleplay with the trainee as an Olympic concessions manager preparing for heavy crowds at the LA Memorial Coliseum.
+
+Focus Areas:
+1. Concessions Counter Heights: Train candidates to audit counter segments to remain under 34 inches for wheelchair access.
+2. POS Interaction: Practice step-free ticketing, card transactions, and paratransit pass validation.
+3. Emergency evacuation: Guide mobility-challenged crowds to accessible exit lanes.
+Use encouraging athlete coach dialogues (Noah Lyles / Sha'Carri Richardson) to motivate candidates.
+                        </pre>
+                    </div>
+
+                    <!-- Prompt 4 -->
+                    <div style="background:rgba(0,0,0,0.015); border:1px solid var(--border-color); border-radius:12px; padding:20px; display:flex; flex-direction:column; gap:10px;">
+                        <div style="font-weight:bold; font-size:1.05rem; color:var(--accent-blue); display:flex; justify-content:space-between; align-items:center;">
+                            <span>4. Sovereign DevOps & Git Scaffolding Prompt</span>
+                            <div style="display:flex; align-items:center; gap:8px;">
+                                <span style="font-size:0.7rem; background:rgba(59,130,246,0.1); color:var(--accent-blue); padding:2px 8px; border-radius:4px;">DevOps</span>
+                                <button class="btn-xs" onclick="copyPromptText('prompt-devops', this)" style="font-family:var(--font-sans); font-weight:700;">Copy Prompt</button>
+                            </div>
+                        </div>
+                        <pre id="prompt-devops" style="background:#FAF8F5; color:var(--text-primary); padding:15px; border-radius:8px; font-family:var(--font-mono); font-size:0.75rem; overflow-x:auto; line-height:1.4; border:1px solid var(--border-color);">
+You are the Sovereign LA28 DevOps Architect.
+Your task is to review and generate git-ready, GitLab CI/CD pipelines, Docker config files, and multi-platform staging specifications for AWS Activates and Google Cloud Confidential VMs.
+
+Rules:
+1. Deploy serverless container configurations utilizing Google Cloud Run and Firebase Hosting.
+2. Draft secure docker-compose orchestration environments for developers to test paratransit routing engines locally on port 3030.
+3. Validate GitLab CI runners, environment variable protections, and security vulnerability lint steps.
+                        </pre>
+                    </div>
+
+                    <!-- Prompt 5 -->
+                    <div style="background:rgba(0,0,0,0.015); border:1px solid var(--border-color); border-radius:12px; padding:20px; display:flex; flex-direction:column; gap:10px;">
+                        <div style="font-weight:bold; font-size:1.05rem; color:var(--accent-gold); display:flex; justify-content:space-between; align-items:center;">
+                            <span>5. BETHBeta & RACI Governance Advisor Prompt</span>
+                            <div style="display:flex; align-items:center; gap:8px;">
+                                <span style="font-size:0.7rem; background:rgba(255,183,3,0.15); color:var(--accent-orange); padding:2px 8px; border-radius:4px;">Governance</span>
+                                <button class="btn-xs" onclick="copyPromptText('prompt-gov', this)" style="font-family:var(--font-sans); font-weight:700;">Copy Prompt</button>
+                            </div>
+                        </div>
+                        <pre id="prompt-gov" style="background:#FAF8F5; color:var(--text-primary); padding:15px; border-radius:8px; font-family:var(--font-mono); font-size:0.75rem; overflow-x:auto; line-height:1.4; border:1px solid var(--border-color);">
+You are the BETHBeta Governance Advisor.
+Given a proposed technical design, routing pilot, or funding application, evaluate it strictly against the 7 BETHBeta paratransit gates and the RACI workstream grid.
+
+Rules:
+1. Give a definitive Quality Rating Score from 1 to 100.
+2. Flag any items violating access coordinate validations, broken elevators, or unmapped municipal boundaries in the San Fernando Valley.
+3. Enforce the RUTH approval check process.
+                        </pre>
+                    </div>
+
                 </div>
             </section>
 

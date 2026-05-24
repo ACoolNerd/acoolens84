@@ -1,0 +1,19 @@
+{
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.wordWrap": "on",
+  "files.exclude": {
+    "**/.git": true,
+    "**/.DS_Store": true,
+    "**/node_modules": true
+  },
+  "editor.fontFamily": "'Inter', 'Outfit', 'Space Grotesk', 'Courier New', monospace",
+  "editor.fontSize": 13,
+  "workbench.colorCustomizations": {
+    "activityBar.background": "#08090C",
+    "sideBar.background": "#0D0E12",
+    "editor.background": "#0E1015",
+    "statusBar.background": "#BD00FF",
+    "statusBar.foreground": "#FFFFFF"
+  }
+}

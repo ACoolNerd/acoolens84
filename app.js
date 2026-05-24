@@ -684,6 +684,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // HUD Telemetry Loop
     initHUDTelemetry();
+
+    // Initial loaded database views
+    showCivicCity("burbank");
+    showValleyResource("northbsc");
 });
 
 // Load parsed JSON events database
@@ -853,6 +857,14 @@ function switchTab(tabName) {
     document.querySelectorAll(".nav-item").forEach(item => item.classList.remove("active"));
     document.querySelectorAll(".content-section").forEach(sec => sec.classList.remove("active"));
 
+    // Close mobile menu if open
+    const sidebar = document.querySelector(".sidebar");
+    const overlay = document.getElementById("mobileSidebarOverlay");
+    if (sidebar && sidebar.classList.contains("open")) {
+        sidebar.classList.remove("open");
+        overlay.classList.remove("active");
+    }
+
     // Activate selected
     if (tabName === 'home') {
         document.getElementById("navHome").classList.add("active");
@@ -873,7 +885,51 @@ function switchTab(tabName) {
     } else if (tabName === 'workforce') {
         document.getElementById("navWorkforce").classList.add("active");
         document.getElementById("tab-workforce").classList.add("active");
+    } else if (tabName === 'civic') {
+        document.getElementById("navCivic").classList.add("active");
+        document.getElementById("tab-civic").classList.add("active");
+    } else if (tabName === 'figma') {
+        document.getElementById("navFigma").classList.add("active");
+        document.getElementById("tab-figma").classList.add("active");
+    } else if (tabName === 'prompts') {
+        document.getElementById("navPrompts").classList.add("active");
+        document.getElementById("tab-prompts").classList.add("active");
     }
+}
+
+// Switch sub-tabs inside the Civic & Governance Command tab
+function switchCivicSub(subTabName) {
+    // Hide all civic sub-contents
+    document.querySelectorAll(".civic-sub-content").forEach(content => {
+        content.style.display = "none";
+    });
+    
+    // Reset background and style for sub-tab buttons
+    const btnValley = document.getElementById("btnCivicSubValley");
+    const btnBoard = document.getElementById("btnCivicSubBoard");
+    const btnProtocol = document.getElementById("btnCivicSubProtocol");
+    
+    [btnValley, btnBoard, btnProtocol].forEach(btn => {
+        if (btn) {
+            btn.style.background = "rgba(0,0,0,0.05)";
+            btn.style.color = "var(--text-primary)";
+        }
+    });
+    
+    // Activate clicked sub-tab
+    const targetContent = document.getElementById(`civic-sub-${subTabName}`);
+    if (targetContent) {
+        targetContent.style.display = "block";
+    }
+    
+    const activeBtn = document.getElementById(`btnCivicSub${subTabName.charAt(0).toUpperCase() + subTabName.slice(1)}`);
+    if (activeBtn) {
+        activeBtn.style.background = "var(--accent-purple)";
+        activeBtn.style.color = "white";
+    }
+    
+    // Update diagnostic logs
+    document.getElementById("diagnosticLogs").textContent += `\n[GOVERNANCE] Sub-tab navigation: switched to ${subTabName.toUpperCase()}`;
 }
 
 // Change language of whole interface dynamically (i18n)
@@ -962,7 +1018,7 @@ function plotRoute() {
                 <span class="step-sub">${step.sub}</span>
             </div>
         `;
-        routeStepsDiv.appendChild(step);
+        routeStepsDiv.appendChild(stepDiv);
     });
 
     // Update map status pill based on outage
@@ -1313,4 +1369,123 @@ function simulateVRActivity(type) {
     
     document.getElementById("statProfitPercent").textContent = `${vrProfit}%`;
     document.getElementById("barProfitPercent").style.width = `${vrProfit}%`;
+}
+
+// San Fernando Valley Incorporated Cities & Key Districts Database
+const valleyCities = {
+    burbank: {
+        name: "City of Burbank",
+        mayor: "Tamala Takahashi",
+        mayorTerm: "Term: Dec 2025 - Dec 2026",
+        viceMayor: "Zizette Mullins (Vice Mayor)",
+        council: ["Konstantine Anthony", "Nikki Perez", "Christopher John Rizzotti"],
+        focus: "Prioritizing step-free boarding access at the Burbank Downtown Metrolink transit station and level bus curb transfers."
+    },
+    calabasas: {
+        name: "City of Calabasas",
+        mayor: "James R. Bozajian",
+        mayorTerm: "Term: Dec 2025 - Dec 2026",
+        viceMayor: "Edward Albrecht (Mayor Pro Tem)",
+        council: ["Alicia Weintraub", "Peter Kraut", "David J. Shapiro"],
+        focus: "Upgrading hiking path accessibility maps and installing tactile crosswalk markers around civic centers."
+    },
+    glendale: {
+        name: "City of Glendale",
+        mayor: "Elen Asatryan",
+        mayorTerm: "Term: Dec 2025 - Dec 2026",
+        viceMayor: "Dan Brotman (Councilmember)",
+        council: ["Vartan Gharpetian", "Ardy Kassakhian", "Ara Najarian"],
+        focus: "Retrofitting the Glendale Beeline local transit fleet for low-floor boarding and multi-language announcements."
+    },
+    hiddenhills: {
+        name: "City of Hidden Hills",
+        mayor: "Joe Loggia",
+        mayorTerm: "Term: Dec 2025 - Dec 2026",
+        viceMayor: "Stuart E. Siegel (Mayor Pro Tem)",
+        council: ["Eniko Gold", "Laura McCorkindale", "Larry G. Weber"],
+        focus: "Improving tactile warning curves and accessibility ramps along horseback paths and key civic crosswalks."
+    },
+    sanfernando: {
+        name: "City of San Fernando",
+        mayor: "Joel Fajardo",
+        mayorTerm: "Term: Dec 2025 - Dec 2026",
+        viceMayor: "Victoria Garcia (Vice Mayor)",
+        council: ["Mary Mendoza", "Mary Solorio", "Patty Lopez"],
+        focus: "Leveling downtown sidewalk ramps and repairing crosswalk audio warning signals for visually impaired citizens."
+    },
+    pacoima: {
+        name: "Pacoima (LA Council District 7)",
+        mayor: "Monica Rodriguez",
+        mayorTerm: "Term: Dec 2024 - Dec 2028 (Councilmember)",
+        viceMayor: "N/A (LA District Representative)",
+        council: ["LA City Council District 7 Staff", "Pacoima Neighborhood Council"],
+        focus: "Coordinating Orange G-Line Busway level-platform boarding audits and expanding local WorkSource training portals."
+    },
+    vannuys: {
+        name: "Van Nuys (LA Council District 6)",
+        mayor: "Imelda Padilla",
+        mayorTerm: "Term: Dec 2024 - Dec 2028 (Councilmember)",
+        viceMayor: "N/A (LA District Representative)",
+        council: ["LA City Council District 6 Staff", "Van Nuys Neighborhood Council"],
+        focus: "Upgrading paratransit bus transfer safety corridors around the Van Nuys MTA Transit station and level-platform audits."
+    }
+};
+
+function showCivicCity(key) {
+    const city = valleyCities[key];
+    if (city) {
+        document.getElementById("civicCityName").textContent = city.name;
+        document.getElementById("civicMayor").textContent = city.mayor;
+        document.getElementById("civicMayorTerm").textContent = city.mayorTerm;
+        document.getElementById("civicViceMayor").textContent = city.viceMayor;
+        
+        const list = document.getElementById("civicCouncilList");
+        list.innerHTML = "";
+        city.council.forEach(member => {
+            const li = document.createElement("li");
+            li.className = "slide-bullet";
+            li.style.cssText = "color:var(--text-secondary); font-size:0.9rem;";
+            li.textContent = member;
+            list.appendChild(li);
+        });
+        
+        document.getElementById("civicFocusArea").textContent = city.focus;
+        document.getElementById("diagnosticLogs").textContent += `\n[CIVIC-DOSSIER] Selected Valley City: ${city.name}`;
+    }
+}
+
+// Toggle mobile sidebar drawer navigation menu
+function toggleMobileSidebar() {
+    const sidebar = document.querySelector(".sidebar");
+    const overlay = document.getElementById("mobileSidebarOverlay");
+    if (sidebar && overlay) {
+        sidebar.classList.toggle("open");
+        overlay.classList.toggle("active");
+    }
+}
+
+// Copy prompt text to clipboard
+function copyPromptText(elementId, button) {
+    const element = document.getElementById(elementId);
+    if (!element) return;
+    
+    const text = element.innerText || element.textContent;
+    navigator.clipboard.writeText(text).then(() => {
+        const oldText = button.textContent;
+        button.textContent = "Copied! ✓";
+        button.style.background = "var(--color-success)";
+        button.style.color = "white";
+        button.style.borderColor = "var(--color-success)";
+        
+        setTimeout(() => {
+            button.textContent = oldText;
+            button.style.background = "";
+            button.style.color = "";
+            button.style.borderColor = "";
+        }, 2000);
+        
+        document.getElementById("diagnosticLogs").textContent += `\n[CLIPBOARD] Prompt copied: ${elementId}`;
+    }).catch(err => {
+        console.error("Clipboard copy failed:", err);
+    });
 }
